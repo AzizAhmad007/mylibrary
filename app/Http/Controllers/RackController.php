@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rack;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class RackController extends Controller
@@ -30,9 +31,10 @@ class RackController extends Controller
                 'statusCode' => 200,
                 'data' => $rack
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat insert data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -62,11 +64,12 @@ class RackController extends Controller
                 'statusCode' => 200,
                 'data' => $data
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat update data',
-                'statusCode' => 200,
-                'data' => $data
+                'message' => $e,
+                'error' => $e->getMessage(),
+                'statusCode' => 400,
+                'data' => null
             ]);
         }
     }

@@ -90,11 +90,12 @@ class BookController extends Controller
                 'statusCode' => 200,
                 "data" => $data
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                "message" => 'error kesalahan saat update data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
-                "data" => null
+                'data' => null
             ]);
         }
     }
