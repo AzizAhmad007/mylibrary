@@ -16,7 +16,6 @@ class ReturnbookController extends Controller
             $returnbook = $request->validate([
                 'rent_code' => 'required',
                 'rent_return_date' => 'required',
-
             ]);
 
             $rent = DB::connection('mysql')->select("select * from rents where code = '$request->rent_code'");
