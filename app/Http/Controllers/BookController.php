@@ -27,7 +27,7 @@ class BookController extends Controller
                 "stock" => 'required'
             ]);
             //$book = $request->all();
-            // AMbil record terakhir
+            // Ambil record terakhir
             $data = Book::orderBy('id', 'desc')->first();
             //$ddata[0]->id
             if ($data == NULL) {
@@ -48,13 +48,13 @@ class BookController extends Controller
             return response()->json([
                 'message' => 'success',
                 'statusCode' => 200,
-                "data" => $book
+                'data' => $book
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                "message" => 'error kesalahan saat insert data',
+                'message' => 'error kesalahan saat insert data',
                 'statusCode' => 400,
-                "data" => null
+                'data' => null
             ]);
         }
     }
@@ -84,13 +84,13 @@ class BookController extends Controller
             $book->update($data);
 
             return response()->json([
-                'message' => 'success',
+                'message' => 'update success',
                 'statusCode' => 200,
                 "data" => $data
             ]);
         } catch (\Throwable $th) {
             return response()->json([
-                "message" => 'error kesalahan saat insert data',
+                "message" => 'error kesalahan saat update data',
                 'statusCode' => 400,
                 "data" => null
             ]);

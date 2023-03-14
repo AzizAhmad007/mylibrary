@@ -16,11 +16,27 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $category = $request->all();
+        try {
+            $category = $request->validate([
+                'name_category' => 'required',
+                'description' => 'required',
+            ]);
 
-        Category::create($category);
+            //$category = $request->all();
+            Category::create($category);
 
-        return response()->json(['message' => 'success']);
+            return response()->json([
+                'message' => 'success',
+                'statusCOde' => 200,
+                "data" => $category
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat insert data',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function show($id)
@@ -31,12 +47,28 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $data = $request->all();
+        try {
+            $category = $request->validate([
+                'name_category' => 'required',
+                'description' => 'required',
+            ]);
 
-        $category->update($data);
+            $category = Category::find($id);
+            $data = $request->all();
+            $category->update($data);
 
-        return response()->json(['message' => 'update success']);
+            return response()->json([
+                'message' => 'update success',
+                'statusCode' => 200,
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat update data',
+                'statusCode' => 400,
+                'date' => null
+            ]);
+        }
     }
 
     public function destroy($id)

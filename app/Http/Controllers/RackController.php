@@ -16,11 +16,27 @@ class RackController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
+        try {
+            $rack = $request->validate([
+                'name_rack' => 'required',
+                'location_rack' => 'required'
+            ]);
 
-        Rack::create($data);
+            //$data = $request->all();
+            Rack::create($rack);
 
-        return response()->json(['message' => 'success']);
+            return response()->json([
+                'message' => 'success',
+                'statusCode' => 200,
+                'data' => $rack
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat insert data',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function show($id)
@@ -31,12 +47,28 @@ class RackController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rack = Rack::find($id);
-        $data = $request->all();
+        try {
+            $rack = $request->validate([
+                'name_rack' => 'required',
+                'location_rack' => 'required'
+            ]);
+            $rack = Rack::find($id);
+            $data = $request->all();
 
-        $rack->update($data);
+            $rack->update($data);
 
-        return response()->json(['message' => 'update success']);
+            return response()->json([
+                'message' => 'update success',
+                'statusCode' => 200,
+                'data' => $data
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat update data',
+                'statusCode' => 200,
+                'data' => $data
+            ]);
+        }
     }
 
     public function destroy($id)

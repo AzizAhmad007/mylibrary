@@ -16,11 +16,29 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        $employee = $request->all();
+        try {
+            $employee = $request->validate([
+                'name_employee' => 'required',
+                'email' => 'required',
+                'position_employee' => 'required',
+                'phone_employee' => 'required',
+                'address_employee' => 'required',
+            ]);
+            //$employee = $request->all();
+            Employee::create($employee);
 
-        Employee::create($employee);
-
-        return response()->json(['message' => 'success']);
+            return response()->json([
+                'message' => 'success',
+                'statusCode' => 200,
+                'data' => $employee
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat insert data',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function show($id)
@@ -31,12 +49,31 @@ class EmployeeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $employee = Employee::find($id);
-        $data = $request->all();
+        try {
+            $employee = $request->validate([
+                'name_employee' => 'required',
+                'email' => 'required',
+                'position_employee' => 'required',
+                'phone_employee' => 'required',
+                'address_employee' => 'required',
+            ]);
 
-        $employee->update($data);
+            $employee = Employee::find($id);
+            $data = $request->all();
+            $employee->update($data);
 
-        return response()->json(['message' => 'update success']);
+            return response()->json([
+                'message' => 'update success',
+                'statusCode' => 200,
+                'data' => $employee
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'error kesalahan saat update data',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function destroy($id)
