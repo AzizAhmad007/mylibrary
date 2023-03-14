@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ReturnbookController;
 use App\Http\Controllers\RentController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
@@ -59,3 +60,5 @@ Route::put('/update-rent/{id}', [RentController::class, 'update']);
 Route::get('/rent/{id}', [RentController::class, 'show']);
 Route::get('/rent', [RentController::class, 'index']);
 Route::delete('/delete-rent/{id}', [RentController::class, 'delete']);
+
+Route::post('/insert-return', [ReturnbookController::class, 'store']);

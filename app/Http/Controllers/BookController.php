@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -18,13 +19,13 @@ class BookController extends Controller
     {
         try {
             $book = $request->validate([
-                "rack_id" => 'required',
-                "category_id" => 'required',
-                "book_title" => 'required',
-                "book_author" => 'required',
-                "publisher_book" => 'required',
-                "publisher_year" => 'required',
-                "stock" => 'required'
+                'rack_id' => 'required',
+                'category_id' => 'required',
+                'book_title' => 'required',
+                'book_author' => 'required',
+                'publisher_book' => 'required',
+                'publisher_year' => 'required',
+                'stock' => 'required'
             ]);
             //$book = $request->all();
             // Ambil record terakhir
@@ -40,7 +41,7 @@ class BookController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "BOK" . date('mY') . sprintf("%04d", $newID);
+            $code = "BOK" . date('mY') . sprintf("%03d", $newID);
             // masukkan formatted code kedalam buku[code]
             $book['code'] = $code;
             Book::create($book);
@@ -50,9 +51,10 @@ class BookController extends Controller
                 'statusCode' => 200,
                 'data' => $book
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat insert data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
                 'data' => null
             ]);

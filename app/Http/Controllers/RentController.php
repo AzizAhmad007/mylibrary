@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rent;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 
 class RentController extends Controller
@@ -17,7 +18,6 @@ class RentController extends Controller
     {
         try {
             $rent = $request->validate([
-                'code' => 'required',
                 'book_id' => 'required',
                 'customer_id' => 'required',
                 'employee_id' => 'required',
@@ -38,7 +38,7 @@ class RentController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "RNT" . date('mY') . sprintf("%04d", $newID);
+            $code = "RNT" . date('mY') . sprintf("%03d", $newID);
             //masukkan formatted code kedalam rent[code]
             $rent['code'] = $code;
             Rent::create($rent);
@@ -48,9 +48,10 @@ class RentController extends Controller
                 'statusCode' => 200,
                 'data' => $rent
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat insert data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
                 'data' => null
             ]);

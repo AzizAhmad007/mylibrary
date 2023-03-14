@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Returnbook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class ReturnbookController extends Controller
 {
@@ -14,13 +16,25 @@ class ReturnbookController extends Controller
             $returnbook = $request->validate([
                 'rent_code' => 'required',
                 'rent_return_date' => 'required',
-                'charge' => 'required'
+
             ]);
 
-            //$returnbook = $request->all();
+            $rent = DB::connection('mysql')->select("select * from rents where code = '$request->rent_code'");
+            $rent_return_date = date_timestamp_get(strtotime($rent[0]->return_date));
+            $rent_return_date = idate('z', $rent_return_date);
+            $return_date = idate('z');
+
+            $datedifference = $return_date - $rent_return_date;
+
             $data = new Returnbook();
             $data->rent_code = $request->rent_code;
-            $data->rent_return_date = $request->rent_return_date;
+            $data->rent_return_date = now();
+
+            if ($datedifference <= 7) {
+                $data->charge = 0;
+            } else {
+                $data->charge = ($datedifference - 7) * 5000;
+            }
             Returnbook::create($data);
 
             return response()->json([
@@ -28,9 +42,10 @@ class ReturnbookController extends Controller
                 'statusCode' => 200,
                 'data' => $returnbook
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat insert data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
                 'data' => null
             ]);

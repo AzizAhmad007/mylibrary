@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Exception;
 
 class CustomerController extends Controller
 {
@@ -18,7 +19,6 @@ class CustomerController extends Controller
     {
         try {
             $customer = $request->validate([
-                'code' => 'required',
                 'name_customer' => 'required',
                 'gender' => 'required',
                 'phone_customer' => 'required',
@@ -38,7 +38,7 @@ class CustomerController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "CUS" . date('mY') . sprintf("%04d", $newID);
+            $code = "CUS" . date('mY') . sprintf("%03d", $newID);
             //masukkan formatted code kedalam customer[code]
             $customer['code'] = $code;
             Customer::create($customer);
@@ -48,9 +48,10 @@ class CustomerController extends Controller
                 'statusCode' => 200,
                 'data' => $customer
             ]);
-        } catch (\Throwable $th) {
+        } catch (Exception $e) {
             return response()->json([
-                'message' => 'error kesalahan saat insert data',
+                'message' => $e,
+                'error' => $e->getMessage(),
                 'statusCode' => 400,
                 'data' => null
             ]);
