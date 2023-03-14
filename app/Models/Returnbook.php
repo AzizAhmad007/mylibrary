@@ -19,7 +19,7 @@ class Returnbook extends Model
 
     public function getrent()
     {
-        return $this->belongsTo(Rent::class, 'rent_code', 'code');
+        return $this->hasMany(Rent::class, 'rent_code', 'code');
     }
 
     public function rent()

@@ -20,7 +20,7 @@ class ReturnbookController extends Controller
             ]);
 
             $rent = DB::connection('mysql')->select("select * from rents where code = '$request->rent_code'");
-            $rent_return_date = date_timestamp_get(strtotime($rent[0]->return_date));
+            $rent_return_date = date_timestamp_get($rent[0]->return_date);
             $rent_return_date = idate('z', $rent_return_date);
             $return_date = idate('z');
 
