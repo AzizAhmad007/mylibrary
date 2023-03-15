@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('returnbooks', function (Blueprint $table) {
             $table->id();
             $table->integer('rent_code');
-            $table->integer('date_return');
-            $table->string('employee_id');
+            $table->integer('employee_id');
+            $table->date('date_return');
             $table->timestamps();
         });
     }
