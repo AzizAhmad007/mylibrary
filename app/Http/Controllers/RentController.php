@@ -21,8 +21,8 @@ class RentController extends Controller
                 'book_id' => 'required',
                 'customer_id' => 'required',
                 'employee_id' => 'required',
-                'rent_date' => 'required',
-                'return_date' => 'required'
+                'date_rent' => 'required',
+                'date_return' => 'required'
             ]);
             //$rent = $request->all();
             // Ambil record terakhir
@@ -51,7 +51,8 @@ class RentController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -66,8 +67,8 @@ class RentController extends Controller
                 'book_id' => 'required',
                 'customer_id' => 'required',
                 'employee_id' => 'required',
-                'rent_date' => 'required',
-                'return_date' => 'required'
+                'date_rent' => 'required',
+                'date_return' => 'required'
             ]);
 
             $rent = Rent::find($id);
@@ -82,7 +83,8 @@ class RentController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -91,14 +93,47 @@ class RentController extends Controller
 
     public function show($id)
     {
-        $rent = Rent::find($id);
-        return $rent;
+        try {
+            $rent = Rent::find($id);
+            if ($rent == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $rent;
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $rent
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function destroy($id)
     {
-        $rent = Rent::find($id);
-        $rent->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $rent = Rent::find($id);
+            if ($rent == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $rent->delete();
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $rent
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

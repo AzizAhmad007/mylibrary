@@ -17,8 +17,8 @@ return new class extends Migration
             $table->integer('book_id');
             $table->integer('customer_id');
             $table->integer('employee_id');
-            $table->date('rent_date');
-            $table->date('return_date');
+            $table->date('date_rent');
+            $table->date('date_return');
             $table->timestamps();
         });
     }

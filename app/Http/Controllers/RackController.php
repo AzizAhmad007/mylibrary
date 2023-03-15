@@ -34,7 +34,8 @@ class RackController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -43,8 +44,25 @@ class RackController extends Controller
 
     public function show($id)
     {
-        $rack = Rack::find($id);
-        return $rack;
+        try {
+            $rack = Rack::find($id);
+            if ($rack == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $rack;
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $rack
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -67,7 +85,8 @@ class RackController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -76,8 +95,24 @@ class RackController extends Controller
 
     public function destroy($id)
     {
-        $rack = Rack::find($id);
-        $rack->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $rack = Rack::find($id);
+            if ($rack == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $rack->delete();
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $rack
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

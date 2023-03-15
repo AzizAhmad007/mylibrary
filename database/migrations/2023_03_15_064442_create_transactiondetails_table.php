@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('returnbooks', function (Blueprint $table) {
+        Schema::create('transactiondetails', function (Blueprint $table) {
             $table->id();
-            $table->integer('rent_code');
-            $table->integer('date_return');
-            $table->string('employee_id');
+            $table->integer('rent_date_return');
+            $table->integer('returnbook_date_return');
+            $table->bigInteger('charge');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('returnbooks');
+        Schema::dropIfExists('transactiondetails');
     }
 };

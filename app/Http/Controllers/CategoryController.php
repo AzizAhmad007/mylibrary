@@ -34,7 +34,8 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -43,8 +44,26 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        $category = Category::find($id);
-        return $category;
+        try {
+            $category = Category::find($id);
+            if ($category == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $category;
+
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $category
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -67,7 +86,8 @@ class CategoryController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -76,8 +96,26 @@ class CategoryController extends Controller
 
     public function destroy($id)
     {
-        $category = Category::find($id);
-        $category->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $category = Category::find($id);
+            if ($category == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $category = Category::find($id);
+            $category->delete();
+
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $category
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

@@ -14,8 +14,8 @@ class Rent extends Model
         'book_id',
         'customer_id',
         'employee_id',
-        'rent_date',
-        'return_date'
+        'date_rent',
+        'date_return'
     ];
 
     protected $guarded = ['id'];

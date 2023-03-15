@@ -51,7 +51,8 @@ class CustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -60,8 +61,26 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        $customer = Customer::find($id);
-        return $customer;
+        try {
+            $customer = Customer::find($id);
+            if ($customer == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $customer;
+
+            return response()->json([
+                'message' => 'Data Ditemukan',
+                'statusCode' => 200,
+                'data' => $customer
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -86,7 +105,8 @@ class CustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -95,8 +115,24 @@ class CustomerController extends Controller
 
     public function destroy($id)
     {
-        $customer = Customer::find($id);
-        $customer->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $customer = Customer::find($id);
+            if ($customer == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $customer->delete();
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $customer
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

@@ -54,7 +54,8 @@ class BookController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -63,9 +64,26 @@ class BookController extends Controller
 
     public function show($id)
     {
+        try {
+            $book = Book::find($id);
+            if ($book == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $book;
 
-        $book = Book::find($id);
-        return $book;
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $book
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -93,7 +111,8 @@ class BookController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -102,8 +121,24 @@ class BookController extends Controller
 
     public function destroy($id)
     {
-        $book = Book::find($id);
-        $book->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $book = Book::find($id);
+            if ($book == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $book->delete();
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $book
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

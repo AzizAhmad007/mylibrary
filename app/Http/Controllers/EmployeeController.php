@@ -36,7 +36,8 @@ class EmployeeController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -45,8 +46,25 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::find($id);
-        return $employee;
+        try {
+            $employee = Employee::find($id);
+            if ($employee == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $employee;
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $employee
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function update(Request $request, $id)
@@ -72,7 +90,8 @@ class EmployeeController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                'error' => $e->getMessage(),
+                //'error' => $e->getMessage(),
+                'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -81,8 +100,24 @@ class EmployeeController extends Controller
 
     public function destroy($id)
     {
-        $employee = Employee::find($id);
-        $employee->delete();
-        return response()->json(['message' => 'delete success']);
+        try {
+            $employee = Employee::find($id);
+            if ($employee == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            $employee->delete();
+            return response()->json([
+                'message' => 'delete success',
+                'statusCode' => 200,
+                'data' => $employee
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 }

@@ -11,8 +11,8 @@ class Returnbook extends Model
 
     protected $fillable = [
         'rent_code',
-        'rent_return_date',
-        'charge'
+        'date_return',
+        'employee_id'
     ];
 
     protected $guarded = ['id'];
@@ -22,8 +22,8 @@ class Returnbook extends Model
         return $this->hasMany(Rent::class, 'rent_code', 'code');
     }
 
-    public function rent()
+    public function getemployee()
     {
-        return $this->belongsTo(Rent::class, 'rent_return_date', 'return_date');
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
     }
 }
