@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [LoginController::class, 'login']);
+Route::get('/logout', [LoginController::class, 'logout']);
+
+Route::prefix('logged')->middleware('auth')->group(function () {
+    Route::post('/get-category', [CategoryController::class, 'store']);
+
+    Route::prefix('admin')->middleware('admin')->group(function () {
+        Route::post('/update-category/{id}', [CategoryController::class, 'update']);
+        Route::post('/get-category', [CategoryController::class, 'store']);
+    });
+});
 Route::get('/', function () {
     return view('welcome');
 });

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -13,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('returnbooks', function (Blueprint $table) {
             $table->id();
-            $table->integer('rent_code');
+            $table->string('rent_code')->unique();
             $table->integer('employee_id');
             $table->date('date_return');
             $table->timestamps();

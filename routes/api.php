@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TransactiondetailController;
 use App\Http\Controllers\ReturnbookController;
 use App\Http\Controllers\RentController;
 use App\Http\Controllers\BookController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RackController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -62,3 +64,6 @@ Route::get('/rent', [RentController::class, 'index']);
 Route::delete('/delete-rent/{id}', [RentController::class, 'delete']);
 
 Route::post('/insert-return', [ReturnbookController::class, 'store']);
+
+Route::post('/insert-transaction', [TransactiondetailController::class, 'store']);
+Route::post('/insert-user', [UserController::class, 'store']);

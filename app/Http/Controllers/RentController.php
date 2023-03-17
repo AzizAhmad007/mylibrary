@@ -63,7 +63,6 @@ class RentController extends Controller
     {
         try {
             $rent = $request->validate([
-                'code' => 'required',
                 'book_id' => 'required',
                 'customer_id' => 'required',
                 'employee_id' => 'required',
