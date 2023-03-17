@@ -22,8 +22,12 @@ Route::prefix('logged')->middleware('auth')->group(function () {
     Route::post('/get-category', [CategoryController::class, 'store']);
 
     Route::prefix('admin')->middleware('admin')->group(function () {
-        Route::post('/update-category/{id}', [CategoryController::class, 'update']);
+        //---------------------------category------------------------------------------------
+        Route::put('/update-category/{id}', [CategoryController::class, 'update']);
         Route::post('/get-category', [CategoryController::class, 'store']);
+        Route::get('/category', [CategoryController::class, 'index']);
+        Route::get('/category/{id}', [CategoryController::class, 'show']);
+        Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy']);
     });
 });
 Route::get('/', function () {

@@ -16,7 +16,11 @@ class LoginController extends Controller
 
             if (Auth::attempt($credentials)) {
                 $token = $request->user()->createToken('auth_token')->plainTextToken;
-                return response()->json($token);
+                return response()->json([
+                    'message' => 'success',
+                    'statusCode' => 200,
+                    'data' => $token
+                ]);
             } else {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
@@ -31,7 +35,7 @@ class LoginController extends Controller
         }
     }
 
-    public function getUser(Request $request)
+    public function getUser()
     {
         try {
             $data = User::all();

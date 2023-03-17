@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -17,6 +18,8 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+        $data = Auth::user();
+        //dd($data);
         try {
             $category = $request->validate([
                 'name_category' => 'required',
