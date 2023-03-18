@@ -22,7 +22,7 @@ class RentController extends Controller
                 'customer_id' => 'required',
                 'employee_id' => 'required',
                 'date_rent' => 'required',
-                'date_return' => 'required'
+                'date_promise' => 'required'
             ]);
             //$rent = $request->all();
             // Ambil record terakhir
@@ -38,7 +38,7 @@ class RentController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "RNT" . date('mY') . sprintf("%03d", $newID);
+            $code = "RNT" . date('mY') . sprintf("%04d", $newID);
             //masukkan formatted code kedalam rent[code]
             $rent['code'] = $code;
             Rent::create($rent);
@@ -51,8 +51,8 @@ class RentController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                //'error' => $e->getMessage(),
-                'error' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+                //'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -67,7 +67,7 @@ class RentController extends Controller
                 'customer_id' => 'required',
                 'employee_id' => 'required',
                 'date_rent' => 'required',
-                'date_return' => 'required'
+                'date_promise' => 'required'
             ]);
 
             $rent = Rent::find($id);

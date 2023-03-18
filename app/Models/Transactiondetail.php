@@ -10,7 +10,7 @@ class Transactiondetail extends Model
     use HasFactory;
 
     protected $fillable = [
-        'rent_date_return',
+        'rent_date_promise',
         'returnbook_date_return',
         'charge'
     ];
@@ -19,7 +19,7 @@ class Transactiondetail extends Model
 
     public function getrent()
     {
-        return $this->belongsTo(Rent::class, 'rent_date_return', 'date_return');
+        return $this->belongsTo(Rent::class, 'rent_date_promise', 'date_promise');
     }
 
     public function getreturnbook()

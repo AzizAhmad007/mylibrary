@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transactiondetail;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Exception;
 
 class TransactiondetailController extends Controller
@@ -13,31 +14,24 @@ class TransactiondetailController extends Controller
     {
         try {
             $Transactiondetail = $request->validate([
-                'rent_date_return' => 'required',
+                'rent_date_promise' => 'required',
                 'returnbook_date_return' => 'required',
-
             ]);
 
-            $Transactiondetail = $request->all();
-
-            $data = new Transactiondetail();
-            $charge = 0;
-
-            // jika tanggal pengembalian kurang dari atau sama dengan tanggal jatuh tempo
-            if ($data->returnbook_date_return <= $data->rent_date_return) {
-                $charge = 0;
-
-                // jika tanggal pengembalian lebih dari tanggal jatuh tempo
+            //$Transactiondetail = $request->all();
+            $promiseTime = $Transactiondetail['rent_date_promise'];
+            $returnTime = $Transactiondetail['returnbook_date_return'];
+            $moneyFine = 5000;
+            if ($returnTime > $promiseTime) {
+                $promiseTimeAfterParse = Carbon::parse($promiseTime);
+                $returnTimeAfterparse = Carbon::parse($returnTime);
+                $diffInDays = $returnTimeAfterparse->diffInDays($promiseTimeAfterParse);
+                $charge = $diffInDays * $moneyFine;
             } else {
-
-                // hitung selisih hari antara tanggal pengembalian dengan tanggal jatuh tempo
-                $charge_days = $data->returnbook_date_return->diffInDays($data->rent_date_return);
-
-                // tambahkan denda sesuai dengan selisih hari
-                $charge = $charge_days * 5000;
+                $charge = 0;
             }
-            $data->denda = $charge;
-            $data->save();
+            $Transactiondetail['charge'] = $charge;
+            Transactiondetail::create($Transactiondetail);
 
             return response()->json([
                 'message' => 'success',

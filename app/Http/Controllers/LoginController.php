@@ -50,4 +50,16 @@ class LoginController extends Controller
             ]);
         }
     }
+
+    public function logout(Request $request)
+    {
+        $removeToken = $request->user()->tokens()->delete();
+
+        if ($removeToken) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Logout Berhasil!',
+            ]);
+        }
+    }
 }
