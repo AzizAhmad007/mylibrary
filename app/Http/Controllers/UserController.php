@@ -16,14 +16,16 @@ class UserController extends Controller
             $user = $request->validate([
                 'name' => 'required',
                 'email' => 'required',
-                'password' => 'required'
+                'password' => 'required',
+                'level' => 'required'
             ]);
 
             //$user = $request->all();
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'level' => $request->level
             ]);
 
             return response()->json([
@@ -34,8 +36,8 @@ class UserController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                //'error' => $e->getMessage(),
-                'error' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+                //'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);

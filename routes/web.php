@@ -29,6 +29,21 @@ Route::prefix('logged')->middleware('auth')->group(function () {
         Route::get('/category/{id}', [CategoryController::class, 'show']);
         Route::delete('/delete-category/{id}', [CategoryController::class, 'destroy']);
     });
+
+    Route::prefix('cashier')->middleware('cashier')->group(function () {
+        //---------------------------Rent-------------------------------------------
+        Route::post('/insert-rent', [RentController::class, 'store']);
+        Route::put('/update-rent/{id}', [RentController::class, 'update']);
+        Route::get('/rent/{id}', [RentController::class, 'show']);
+        Route::get('/rent', [RentController::class, 'index']);
+        Route::delete('/delete-rent/{id}', [RentController::class, 'delete']);
+
+        //---------------------------Return-----------------------------------------
+        Route::post('/insert-return', [ReturnbookController::class, 'store']);
+
+        //--------------------------------------------------------------------------
+        Route::post('/insert-transaction', [TransactiondetailController::class, 'store']);
+    });
 });
 Route::get('/', function () {
     return view('welcome');
