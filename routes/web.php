@@ -41,7 +41,7 @@ Route::prefix('logged')->middleware('auth')->group(function () {
         //---------------------------Return-----------------------------------------
         Route::post('/insert-return', [ReturnbookController::class, 'store']);
 
-        //--------------------------------------------------------------------------
+        //----------------------------Transactiondetail----------------------------------------------
         Route::post('/insert-transaction', [TransactiondetailController::class, 'store']);
     });
 });
