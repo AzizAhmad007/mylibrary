@@ -17,14 +17,15 @@ class Profit extends Model
      * @var array
      */
     protected $fillable = [
-        'transactiondetail_charge', 'total'
+        'returnbook_id',
+        'total'
     ];
 
     protected $guarded = ['id'];
 
-    public function gettransactiondetail()
+    public function getreturnbook()
     {
-        return $this->belongsTo(Transactiondetail::class, 'transactiondetail_charge', 'charge');
+        return $this->belongsTo(Transactiondetail::class, 'returnbook_id', 'id');
     }
 
     /**

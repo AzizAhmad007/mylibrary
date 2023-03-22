@@ -21,7 +21,7 @@ class ProfitController extends Controller
         ]);
 
         //get data profits by range date
-        $profit = Profit::with('transactiondetail')->whereDate('created_at', '>=', $request->start_date)->whereDate('created_at', '<=', $request->end_date)->get();
+        $profit = Profit::with('returnbook')->whereDate('created_at', '>=', $request->start_date)->whereDate('created_at', '<=', $request->end_date)->get();
 
         //get total profit by range date
         $total = Profit::whereDate('created_at', '>=', $request->start_date)->whereDate('created_at', '<=', $request->end_date)->sum('total');
