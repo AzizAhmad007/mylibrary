@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->string('name_customer');
+            $table->string('name');
             $table->string('gender');
-            $table->text('phone_customer');
-            $table->string('address_customer');
+            $table->text('phone');
+            $table->string('address');
             $table->timestamps();
         });
     }

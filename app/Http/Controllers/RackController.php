@@ -19,8 +19,8 @@ class RackController extends Controller
     {
         try {
             $rack = $request->validate([
-                'name_rack' => 'required',
-                'location_rack' => 'required'
+                'name' => 'required',
+                'location' => 'required'
             ]);
 
             //$data = $request->all();
@@ -69,8 +69,8 @@ class RackController extends Controller
     {
         try {
             $rack = $request->validate([
-                'name_rack' => 'required',
-                'location_rack' => 'required'
+                'name' => 'required',
+                'location' => 'required'
             ]);
             $rack = Rack::find($id);
             $data = $request->all();

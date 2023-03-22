@@ -21,8 +21,8 @@ class BookController extends Controller
             $book = $request->validate([
                 'rack_id' => 'required',
                 'category_id' => 'required',
-                'book_title' => 'required',
-                'book_author' => 'required',
+                'title' => 'required',
+                'author' => 'required',
                 'publisher_book' => 'required',
                 'publisher_year' => 'required',
                 'stock' => 'required'
@@ -54,8 +54,8 @@ class BookController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                //'error' => $e->getMessage(),
-                'error' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+                //'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -92,8 +92,8 @@ class BookController extends Controller
             $book = $request->validate([
                 "rack_id" => 'required',
                 "category_id" => 'required',
-                "book_title" => 'required',
-                "book_author" => 'required',
+                "title" => 'required',
+                "author" => 'required',
                 "publisher_book" => 'required',
                 "publisher_year" => 'required',
                 "stock" => 'required'

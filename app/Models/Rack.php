@@ -10,8 +10,8 @@ class Rack extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name_rack',
-        'location_rack'
+        'name',
+        'location'
     ];
 
     protected $guarded = ['id'];

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\TransactiondetailController;
 use App\Http\Controllers\ReturnbookController;
 use App\Http\Controllers\RentController;
@@ -27,11 +28,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/insert-employee', [EmployeeController::class, 'store']);
-Route::put('/update-employee/{id}', [EmployeeController::class, 'update']);
-Route::get('/employee/{id}', [EmployeeController::class, 'show']);
-Route::get('/employee', [EmployeeController::class, 'index']);
-Route::delete('/delete-employee/{id}', [EmployeeController::class, 'destroy']);
+Route::post('/insert-user', [UserController::class, 'store']);
+Route::put('/update-user/{id}', [UserController::class, 'update']);
+Route::get('/user/{id}', [UserController::class, 'show']);
+Route::get('/user', [UserController::class, 'index']);
+Route::delete('/delete-user/{id}', [UserController::class, 'destroy']);
 
 Route::post('/insert-customer', [CustomerController::class, 'store']);
 Route::put('/update-customer/{id}', [CustomerController::class, 'update']);
@@ -65,5 +66,4 @@ Route::delete('/delete-rent/{id}', [RentController::class, 'delete']);
 
 Route::post('/insert-return', [ReturnbookController::class, 'store']);
 
-Route::post('/insert-transaction', [TransactiondetailController::class, 'store']);
-Route::post('/insert-user', [UserController::class, 'store']);
+Route::get('/profit-filter', [ProfitController::class, 'filter']);

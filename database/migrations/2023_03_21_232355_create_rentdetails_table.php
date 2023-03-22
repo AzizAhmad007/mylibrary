@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('racks', function (Blueprint $table) {
+        Schema::create('rentdetails', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('location');
+            $table->string('rent_code')->unique();
+            $table->string('book_code');
             $table->timestamps();
+
+            $table->foreign('rent_code')->references('code')->on('rents');
+
+            $table->foreign('book_code')->references('code')->on('books');
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('racks');
+        Schema::dropIfExists('rentdetails');
     }
 };

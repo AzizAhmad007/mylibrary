@@ -13,8 +13,8 @@ class Book extends Model
         'code',
         'rack_id',
         'category_id',
-        'book_title',
-        'book_author',
+        'title',
+        'author',
         'publisher_book',
         'publisher_year',
         'stock'

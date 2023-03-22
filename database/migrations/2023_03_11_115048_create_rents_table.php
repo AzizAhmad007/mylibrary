@@ -14,12 +14,16 @@ return new class extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->integer('book_id');
-            $table->integer('customer_id');
-            $table->integer('employee_id');
+            $table->string('customer_code');
+            $table->unsignedBigInteger('user_id');
             $table->date('date_rent');
             $table->date('date_promise');
+            $table->integer('jumlah_buku_pinjam');
             $table->timestamps();
+
+            $table->foreign('customer_code')->references('code')->on('customers');
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

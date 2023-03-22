@@ -19,10 +19,10 @@ class CustomerController extends Controller
     {
         try {
             $customer = $request->validate([
-                'name_customer' => 'required',
+                'name' => 'required',
                 'gender' => 'required',
-                'phone_customer' => 'required',
-                'address_customer' => 'required'
+                'phone' => 'required',
+                'address' => 'required'
             ]);
             //$customer = $request->all();
             // Ambil record terakhir
@@ -38,7 +38,7 @@ class CustomerController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "CUS" . date('mY') . sprintf("%03d", $newID);
+            $code = "CUS" . date('mY') . sprintf("%02d", $newID);
             //masukkan formatted code kedalam customer[code]
             $customer['code'] = $code;
             Customer::create($customer);
@@ -51,8 +51,8 @@ class CustomerController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'message' => $e,
-                //'error' => $e->getMessage(),
-                'error' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+                //'error' => 'Terjadi kesalahan',
                 'statusCode' => 400,
                 'data' => null
             ]);
@@ -87,11 +87,10 @@ class CustomerController extends Controller
     {
         try {
             $customer = $request->validate([
-                'code' => 'required',
-                'name_customer' => 'required',
+                'name' => 'required',
                 'gender' => 'required',
-                'phone_customer' => 'required',
-                'address_customer' => 'required'
+                'phone' => 'required',
+                'address' => 'required'
             ]);
             $customer = Customer::find($id);
             $data = $request->all();

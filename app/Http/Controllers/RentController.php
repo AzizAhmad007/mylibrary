@@ -14,15 +14,16 @@ class RentController extends Controller
         $rent = Rent::all();
         return $rent;
     }
+
     public function store(Request $request)
     {
         try {
             $rent = $request->validate([
-                'book_id' => 'required',
-                'customer_id' => 'required',
-                'employee_id' => 'required',
+                'customer_code' => 'required',
+                'user_id' => 'required',
                 'date_rent' => 'required',
-                'date_promise' => 'required'
+                'date_promise' => 'required',
+                'jumlah_buku_pinjam' => 'required'
             ]);
             //$rent = $request->all();
             // Ambil record terakhir
@@ -38,7 +39,7 @@ class RentController extends Controller
             //set new id = last id ditambah 1
             $newID = $lastID + 1;
             // format code
-            $code = "RNT" . date('mY') . sprintf("%04d", $newID);
+            $code = "RNT" . date('mY') . sprintf("%02d", $newID);
             //masukkan formatted code kedalam rent[code]
             $rent['code'] = $code;
             Rent::create($rent);
@@ -63,11 +64,11 @@ class RentController extends Controller
     {
         try {
             $rent = $request->validate([
-                'book_id' => 'required',
-                'customer_id' => 'required',
-                'employee_id' => 'required',
+                'customer_code' => 'required',
+                'user_id' => 'required',
                 'date_rent' => 'required',
-                'date_promise' => 'required'
+                'date_promise' => 'required',
+                'jumlah_buku_pinjam' => 'required'
             ]);
 
             $rent = Rent::find($id);

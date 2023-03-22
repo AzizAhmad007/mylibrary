@@ -22,7 +22,7 @@ class CategoryController extends Controller
         //dd($data);
         try {
             $category = $request->validate([
-                'name_category' => 'required',
+                'name' => 'required',
                 'description' => 'required',
             ]);
 
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     {
         try {
             $category = $request->validate([
-                'name_category' => 'required',
+                'name' => 'required',
                 'description' => 'required',
             ]);
 

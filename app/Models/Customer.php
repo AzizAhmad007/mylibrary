@@ -11,10 +11,10 @@ class Customer extends Model
 
     protected $fillable = [
         'code',
-        'name_customer',
+        'name',
         'gender',
-        'phone_customer',
-        'address_customer'
+        'phone',
+        'address'
     ];
 
     protected $guarded = ['id'];

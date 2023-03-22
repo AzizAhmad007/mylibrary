@@ -2,36 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Employee;
+use App\Models\Rentdetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Exception;
 
-class EmployeeController extends Controller
+class RentdetailController extends Controller
 {
     public function index()
     {
-        $employee = Employee::all();
-        return $employee;
+        $rentdetail = Rentdetail::all();
+        return $rentdetail;
+    }
+
+    public function show($id)
+    {
+        try {
+            $rentdetail = Rentdetail::find($id);
+            if ($rentdetail == null) {
+                throw new Exception('Data tidak ditemukan');
+            }
+            return $rentdetail;
+
+            return response()->json([
+                'message' => 'Data ditemukan',
+                'statusCode' => 200,
+                'data' => $rentdetail
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'message' => $e,
+                'error' => 'Data tidak ditemukan',
+                'statusCode' => 400,
+                'data' => null
+            ]);
+        }
     }
 
     public function store(Request $request)
     {
         try {
-            $employee = $request->validate([
-                'name_employee' => 'required',
-                'email' => 'required',
-                'position_employee' => 'required',
-                'phone_employee' => 'required',
-                'address_employee' => 'required',
+            $rentdetail = $request->validate([
+                'rent_code' => 'required',
+                'book_code' => 'required',
             ]);
-            //$employee = $request->all();
-            Employee::create($employee);
+
+            //$category = $request->all();
+            Rentdetail::create($rentdetail);
 
             return response()->json([
                 'message' => 'success',
-                'statusCode' => 200,
-                'data' => $employee
+                'statusCOde' => 200,
+                "data" => $rentdetail
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -44,48 +66,22 @@ class EmployeeController extends Controller
         }
     }
 
-    public function show($id)
-    {
-        try {
-            $employee = Employee::find($id);
-            if ($employee == null) {
-                throw new Exception('Data tidak ditemukan');
-            }
-            return $employee;
-            return response()->json([
-                'message' => 'Data ditemukan',
-                'statusCode' => 200,
-                'data' => $employee
-            ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'message' => $e,
-                'error' => 'Data tidak ditemukan',
-                'statusCode' => 400,
-                'data' => null
-            ]);
-        }
-    }
-
     public function update(Request $request, $id)
     {
         try {
-            $employee = $request->validate([
-                'name_employee' => 'required',
-                'email' => 'required',
-                'position_employee' => 'required',
-                'phone_employee' => 'required',
-                'address_employee' => 'required',
+            $rentdetail = $request->validate([
+                'rent_code' => 'required',
+                'book_code' => 'required',
             ]);
-
-            $employee = Employee::find($id);
+            $rentdetail = Rentdetail::find($id);
             $data = $request->all();
-            $employee->update($data);
+
+            $rentdetail->update($data);
 
             return response()->json([
                 'message' => 'update success',
                 'statusCode' => 200,
-                'data' => $employee
+                'data' => $data
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -101,15 +97,17 @@ class EmployeeController extends Controller
     public function destroy($id)
     {
         try {
-            $employee = Employee::find($id);
-            if ($employee == null) {
+            $rentdetail = Rentdetail::find($id);
+            if ($rentdetail == null) {
                 throw new Exception('Data tidak ditemukan');
             }
-            $employee->delete();
+            $rentdetail = Rentdetail::find($id);
+            $rentdetail->delete();
+
             return response()->json([
                 'message' => 'delete success',
                 'statusCode' => 200,
-                'data' => $employee
+                'data' => $rentdetail
             ]);
         } catch (Exception $e) {
             return response()->json([

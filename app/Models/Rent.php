@@ -11,27 +11,22 @@ class Rent extends Model
 
     protected $fillable = [
         'code',
-        'book_id',
-        'customer_id',
-        'employee_id',
+        'customer_code',
+        'user_id',
         'date_rent',
-        'date_promise'
+        'date_promise',
+        'jumlah_buku_pinjam'
     ];
 
     protected $guarded = ['id'];
 
-    public function getbook()
-    {
-        return $this->belongsTo(Book::class, 'book_id', 'id');
-    }
-
     public function getcustomer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+        return $this->belongsTo(Customer::class, 'customer_code', 'code');
     }
 
-    public function getemployee()
+    public function getuser()
     {
-        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }
