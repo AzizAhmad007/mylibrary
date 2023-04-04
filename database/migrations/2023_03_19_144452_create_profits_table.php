@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('returnbook_id');
             $table->bigInteger('total');
             $table->timestamps();
+
+            $table->foreign('returnbook_id')->references('id')->on('returnbook');
         });
     }
 
